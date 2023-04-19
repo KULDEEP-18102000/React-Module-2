@@ -10,6 +10,7 @@ const AddUser = (props) => {
   // const [enteredAge, setEnteredAge] = useState('');
   const nameInputRef=useRef()
   const ageInputRef=useRef()
+  const collegeInputRef=useRef()
 
   const [error, setError] = useState();
 
@@ -17,6 +18,8 @@ const AddUser = (props) => {
     event.preventDefault();
     const enteredUsername=nameInputRef.current.value
     const enteredAge=ageInputRef.current.value
+    const enteredCollegeName=collegeInputRef.current.value
+    console.log(enteredCollegeName)
     if (enteredUsername.trim().length === 0 || enteredAge.trim().length === 0) {
       setError({
         title: 'Invalid input',
@@ -31,9 +34,11 @@ const AddUser = (props) => {
       });
       return;
     }
-    props.onAddUser(enteredUsername, enteredAge);
+    console.log(enteredCollegeName)
+    props.onAddUser(enteredUsername, enteredAge,enteredCollegeName);
     nameInputRef.current.value=''
     ageInputRef.current.value=''
+    collegeInputRef.current.value=''
     // setEnteredUsername('');
     // setEnteredAge('');
   };
@@ -76,6 +81,14 @@ const AddUser = (props) => {
             // value={enteredAge}
             // onChange={ageChangeHandler}
             ref={ageInputRef}
+          />
+          <label htmlFor="collegeName">College Name</label>
+          <input
+            id="collegeName"
+            type="text"
+            // value={enteredAge}
+            // onChange={ageChangeHandler}
+            ref={collegeInputRef}
           />
           <Button type="submit">Add User</Button>
         </form>
