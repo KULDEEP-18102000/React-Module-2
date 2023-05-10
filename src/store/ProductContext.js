@@ -41,6 +41,8 @@ export const ProductContextProvider = (props) => {
 
   const AddItem=(shirt,id)=>{
     // let shirt_item;
+    console.log(shirt)
+    console.log(id)
     let flag=false
     cartItems.forEach((item)=>{
         if(item.name===shirt.name){
@@ -55,11 +57,15 @@ export const ProductContextProvider = (props) => {
                 item.Total_small=item.Total_small-1
             }
         }
+        console.log(item)
     })
     if(flag==false){
+        // let new_shirts=cartItems.push(shirt)
         setCartItems((data)=>{
+            console.log(data)
             return [...data,shirt]
         })
+        // setCartItems(new_shirts)
     }
   }
 
