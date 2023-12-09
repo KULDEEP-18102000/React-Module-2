@@ -1,8 +1,14 @@
 import React from 'react';
-
 import classes from './Movie.module.css';
+import Spinner from 'react-bootstrap/Spinner';
+
+function BorderExample() {
+  return <Spinner animation="border" />;
+}
 
 const Movie = (props) => {
+
+  // console.log(props)
   return (
     <li className={classes.movie}>
       <h2>{props.title}</h2>
