@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useEffect, useState} from 'react';
 
 import MoviesList from './components/MoviesList';
 import './App.css';
@@ -10,6 +10,8 @@ function App() {
   const [loading,setLoading]=useState(false)
   const [error,setError]=useState(null)
   const [apiCalling,setAPICalling]=useState(false)
+
+  
   
   let intervalId;
   if(apiCalling==true){
@@ -19,12 +21,39 @@ function App() {
       const json_response=await response.json()
       setMovies(json_response.results)
   }, 5000);
+
+  
     
   }
+
+  useEffect(async()=>{
+    try {
+      setLoading(true)
+      const response=await fetch('https://swapi.dev/api/films/')
+      if(!response.ok){
+        throw new Error('something went wrong ...Retrying')
+      }
+      
+      const json_response=await response.json()
+      setMovies(json_response.results)
+      setLoading(false)
+      return null
+      } catch (error) {
+        // console.log(error)
+        setError(error.message)
+        setLoading(false)
+  
+        setAPICalling(true)
+        return null
+        
+      }
+  },[])
+
+
   const fetchMoviesHandler=async()=>{
     try {
     setLoading(true)
-    const response=await fetch('https://swapi.dev/api/film/')
+    const response=await fetch('https://swapi.dev/api/films/')
     if(!response.ok){
       throw new Error('something went wrong ...Retrying')
     }
