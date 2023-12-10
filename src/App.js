@@ -8,38 +8,59 @@ function App() {
 
   const [movies,setMovies]=useState([])
   const [loading,setLoading]=useState(false)
-
+  const [error,setError]=useState(null)
+  const [apiCalling,setAPICalling]=useState(false)
+  
+  let intervalId;
+  if(apiCalling==true){
+    intervalId = setInterval(async function() {
+      console.log("api calling")
+      const response=await fetch('https://swapi.dev/api/film/')
+      const json_response=await response.json()
+      setMovies(json_response.results)
+  }, 5000);
+    
+  }
   const fetchMoviesHandler=async()=>{
+    try {
     setLoading(true)
-    const response=await fetch('https://swapi.dev/api/films/')
+    const response=await fetch('https://swapi.dev/api/film/')
+    if(!response.ok){
+      throw new Error('something went wrong ...Retrying')
+    }
+    
     const json_response=await response.json()
     setMovies(json_response.results)
     setLoading(false)
+    } catch (error) {
+      // console.log(error)
+      setError(error.message)
+      setLoading(false)
+
+      setAPICalling(true)
+      
+    }
+
   }
 
-  const dummyMovies = [
-    {
-      id: 1,
-      title: 'Some Dummy Movie',
-      openingText: 'This is the opening text of the movie',
-      releaseDate: '2021-05-18',
-    },
-    {
-      id: 2,
-      title: 'Some Dummy Movie 2',
-      openingText: 'This is the second opening text of the movie',
-      releaseDate: '2021-05-19',
-    },
-  ];
+  const CancelFetching=()=>{
+    console.log(intervalId)
+    clearInterval(intervalId);
+    setAPICalling(false)
+    console.log('canceled')
+  }
+
 
   return (
     <React.Fragment>
       <section>
         <button onClick={fetchMoviesHandler}>Fetch Movies</button>
+        <button onClick={CancelFetching}>Cancel</button>
       </section>
       <section>
-        {loading==false && <MoviesList movies={movies} />}
-        {loading==true && <p>...Loading</p>}
+        {loading==false && !error && <MoviesList movies={movies} />}
+        {loading==true && !error && <p>...Loading</p>}
+        {loading==false && error && <p>{error}</p>}
       </section>
     </React.Fragment>
   );
