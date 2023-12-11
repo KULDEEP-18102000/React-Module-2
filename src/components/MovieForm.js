@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-const MovieForm=()=>{
+const MovieForm=(props)=>{
 
     const [formData,setFormData]=useState({
         Title:"",
@@ -10,10 +10,14 @@ const MovieForm=()=>{
 
     const MovieSubmitHandler=(e)=>{
         e.preventDefault()
+        console.log("submit")
         console.log(formData)
+        props.addMovie(formData)
+        setFormData({Title:"",Text:"",Date:""})
     }
 
     const movieChangeHandler=(event)=>{
+        // console.log(formData)
         setFormData({...formData,[event.target.name]:event.target.value})
     }
 
