@@ -1,14 +1,20 @@
-import { useState, useRef } from 'react';
+import { useState, useRef,useContext } from 'react';
 
 import classes from './AuthForm.module.css';
 
+import AuthContext from '../../store/auth-context';
+
 const AuthForm = () => {
+
+  const ctx=useContext(AuthContext)
+
   const [isLogin, setIsLogin] = useState(true);
   const [user,setUser]=useState({
     returnSecureToken:true,
     email:"",
     password:""
   })
+
   const [loading,setLoading]=useState(false)
 
   const switchAuthModeHandler = () => {
@@ -64,7 +70,9 @@ const AuthForm = () => {
       const res=await response.json()
       setLoading(false)
 
-      console.log(res)
+      console.log(res.refreshToken)
+      // localStorage.setItem('token',res.refreshToken)
+      ctx.loginHandler(res.refreshToken)
     }
     
     }
