@@ -3,15 +3,19 @@ import { Link } from 'react-router-dom';
 import classes from './MainNavigation.module.css';
 import AuthContext from '../../store/auth-context';
 import { useContext } from 'react';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 const MainNavigation = () => {
 
   const ctx=useContext(AuthContext)
 
+  const history=useHistory()
+
   const isLoggedIn=ctx.isLoggedIn
 
   const logOut=()=>{
     ctx.logOutHandler()
+    history.push('/auth')
   }
 
 
