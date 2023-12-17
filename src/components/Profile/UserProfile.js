@@ -7,11 +7,11 @@ const UserProfile = () => {
 
   const history=useHistory()
 
-  useEffect(()=>{
-    if(!localStorage.getItem('token')){
-      history.push('/auth')
-    }
-  },[])
+  // useEffect(()=>{
+  //   if(!localStorage.getItem('token')){
+  //     history.push('/auth')
+  //   }
+  // },[])
 
 
   return (

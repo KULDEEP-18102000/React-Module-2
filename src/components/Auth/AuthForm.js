@@ -1,12 +1,14 @@
 import { useState, useRef,useContext } from 'react';
 
 import classes from './AuthForm.module.css';
-
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import AuthContext from '../../store/auth-context';
 
 const AuthForm = () => {
 
   const ctx=useContext(AuthContext)
+
+  const history=useHistory()
 
   const [isLogin, setIsLogin] = useState(true);
   const [user,setUser]=useState({
@@ -72,7 +74,8 @@ const AuthForm = () => {
 
       console.log(res.refreshToken)
       // localStorage.setItem('token',res.refreshToken)
-      ctx.loginHandler(res.refreshToken)
+      ctx.loginHandler(res.idToken)
+      history.push('/profile')
     }
     
     }
