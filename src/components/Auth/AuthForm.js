@@ -19,24 +19,58 @@ const AuthForm = () => {
     setLoading(true)
     e.preventDefault()
     console.log(user)
-    const response= await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBgisiq-vo6ATIrzPaLyCe3j876p8HEzVs',{
+    if(isLogin==false){
+      const response= await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBgisiq-vo6ATIrzPaLyCe3j876p8HEzVs',{
       method:'POST',
       body:JSON.stringify(user),
       headers:{
         'Content-Type':'application/json'
       }
     })
+
     if(!response.ok){
       const res=await response.json()
       setLoading(false)
 
-      console.log("error",response)
+      console.log(res)
       let errorMessage="Something Went Wrong"
       if(res && res.error && res.error.message){
         errorMessage=res.error.message
       }
       alert(errorMessage);
     }
+    }
+    else{
+      const response= await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBgisiq-vo6ATIrzPaLyCe3j876p8HEzVs',{
+      method:'POST',
+      body:JSON.stringify(user),
+      headers:{
+        'Content-Type':'application/json'
+      }
+    })
+
+    if(!response.ok){
+      const res=await response.json()
+      setLoading(false)
+
+      console.log(res)
+      let errorMessage="Something Went Wrong"
+      if(res && res.error && res.error.message){
+        errorMessage=res.error.message
+      }
+      alert(errorMessage);
+    }
+    else{
+      const res=await response.json()
+      setLoading(false)
+
+      console.log(res)
+    }
+    
+    }
+    
+    
+    
     
     
     
