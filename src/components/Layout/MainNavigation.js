@@ -14,6 +14,7 @@ const MainNavigation = () => {
   const isLoggedIn=ctx.isLoggedIn
 
   const logOut=()=>{
+    
     ctx.logOutHandler()
     history.push('/auth')
   }

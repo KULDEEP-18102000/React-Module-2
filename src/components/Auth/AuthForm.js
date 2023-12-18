@@ -72,8 +72,8 @@ const AuthForm = () => {
       const res=await response.json()
       setLoading(false)
 
-      console.log(res.refreshToken)
-      // localStorage.setItem('token',res.refreshToken)
+      console.log(res.idToken)
+      // localStorage.setItem('token',res.idToken)
       ctx.loginHandler(res.idToken)
       history.push('/profile')
     }
